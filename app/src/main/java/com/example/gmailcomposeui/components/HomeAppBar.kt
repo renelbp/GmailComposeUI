@@ -5,9 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
@@ -21,9 +19,11 @@ import androidx.compose.ui.unit.dp
 import com.example.gmailcomposeui.GmailApp
 import com.example.gmailcomposeui.ui.theme.GmailComposeUITheme
 import com.example.gmailcomposeui.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
-fun HomeAppBar(){
+fun HomeAppBar(scaffoldState: ScaffoldState, scope: CoroutineScope){ // THE DRAWER MENU IS GONNA BE CONNECTED TO THE SCAFFOLD, THAT'S WHY WE NEED A  SCAFFOLDSTATE IN OUR HOME APP BAR
     Box(modifier = Modifier.padding(10.dp)) {
         Card(modifier = Modifier.requiredHeight(50.dp),
             shape = RoundedCornerShape(10.dp), elevation = 6.dp) {
@@ -31,11 +31,22 @@ fun HomeAppBar(){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(8.dp)) {
-                Icon(Icons.Default.Menu, "Menu")
+
+                IconButton(onClick = {
+                    scope.launch{
+                        scaffoldState.drawerState.open()
+                    }
+                }) {
+                    Icon(Icons.Default.Menu, "Menu")
+                }
+
                 Text(text = "Search in emails", modifier = Modifier.weight(2.0f))
                 Image(painter = painterResource(id = R.mipmap.ic_launcher),
                     contentDescription = "Profile",
-                    modifier = Modifier.size(30.dp).clip(CircleShape).background(color = Color.LightGray))
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clip(CircleShape)
+                        .background(color = Color.LightGray))
             }
             
         }

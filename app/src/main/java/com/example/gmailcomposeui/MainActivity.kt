@@ -7,8 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.gmailcomposeui.components.HomeAppBar
@@ -30,9 +31,19 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GmailApp() {      /**the {} are mandatory*/
-    Scaffold(topBar = { HomeAppBar() }) {
-        
+fun GmailApp() {
+    /**the {} are mandatory*/
+
+    var scaffoldState = rememberScaffoldState()
+    var coroutineScope = rememberCoroutineScope()
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = { HomeAppBar(scaffoldState, coroutineScope) },
+        drawerContent = {
+
+        }) {
+
     }
 }
 
